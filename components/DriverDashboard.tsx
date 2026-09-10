@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { Navigation, Map, QrCode, CheckCircle, ShieldCheck } from 'lucide-react';
+import { fetchFromApi } from '../app/utils/api'
 
 export default function DriverDashboard({ user }: { user: any }) {
   const [deliveries, setDeliveries] = useState<any[]>([]);
@@ -14,7 +15,7 @@ export default function DriverDashboard({ user }: { user: any }) {
 
   const fetchAvailableDeliveries = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/deliveries/available');
+      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/deliveries/available');
       const data = await response.json();
       setDeliveries(data);
     } catch (error) {
@@ -24,7 +25,7 @@ export default function DriverDashboard({ user }: { user: any }) {
 
   const handleClaimDelivery = async (deliveryId: number) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/deliveries/claim/${deliveryId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/deliveries/claim/${deliveryId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ driver_id: user.id }),
@@ -46,7 +47,7 @@ export default function DriverDashboard({ user }: { user: any }) {
   const handleValidateDropoff = async () => {
     try {
       // Sending exact coordinates of Hope Rescue Shelter to pass the 100m geofence rule
-      const response = await fetch('http://localhost:5000/api/deliveries/validate-handover', {
+      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/deliveries/validate-handover', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

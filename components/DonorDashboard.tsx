@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Package, Clock, Scale, CheckCircle } from 'lucide-react';
+import { fetchFromApi } from '../app/utils/api'
 export default function DonorDashboard({ user }: { user: any }) {
   const [category, setCategory] = useState('');
   const [volume, setVolume] = useState('');
@@ -14,7 +15,7 @@ export default function DonorDashboard({ user }: { user: any }) {
     setStatusMsg('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/batches/log', {
+      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/batches/log', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

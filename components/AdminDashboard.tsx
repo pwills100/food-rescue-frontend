@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { Activity, MapPin, Zap, AlertCircle } from 'lucide-react';
+import { fetchFromApi } from '../app/utils/api';// adjust path if needed based on your folder structure
 
 export default function AdminDashboard({ user }: { user: any }) {
   const [pendingBatches, setPendingBatches] = useState<any[]>([]);
@@ -13,7 +14,7 @@ export default function AdminDashboard({ user }: { user: any }) {
 
   const fetchBatches = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/batches/pending');
+      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/batches/pending');
       const data = await response.json();
       setPendingBatches(data);
     } catch (error) {
@@ -25,7 +26,7 @@ export default function AdminDashboard({ user }: { user: any }) {
     setMatchResult(null);
     try {
       // We pass mock GPS coordinates representing the Bakery's location
-      const response = await fetch(`http://localhost:5000/api/batches/match/${batchId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/batches/match/${batchId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
