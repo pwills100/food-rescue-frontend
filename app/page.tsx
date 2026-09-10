@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Truck, Mail, Lock, AlertCircle, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { fetchFromApi } from '../app/utils/api'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/auth/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),

@@ -14,7 +14,7 @@ export default function AdminDashboard({ user }: { user: any }) {
 
   const fetchBatches = async () => {
     try {
-      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/batches/pending');
+      const response = await fetch('/api/batches/pending');
       const data = await response.json();
       setPendingBatches(data);
     } catch (error) {
@@ -26,7 +26,7 @@ export default function AdminDashboard({ user }: { user: any }) {
     setMatchResult(null);
     try {
       // We pass mock GPS coordinates representing the Bakery's location
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/batches/match/${batchId}`, {
+      const response = await fetch(`/api/batches/match/${batchId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
