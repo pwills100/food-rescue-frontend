@@ -15,7 +15,7 @@ export default function DriverDashboard({ user }: { user: any }) {
 
   const fetchAvailableDeliveries = async () => {
     try {
-      const response = await fetch('/api/deliveries/available');
+      const response = await fetchFromApi('/api/deliveries/available');
       const data = await response.json();
       setDeliveries(data);
     } catch (error) {
@@ -25,7 +25,7 @@ export default function DriverDashboard({ user }: { user: any }) {
 
   const handleClaimDelivery = async (deliveryId: number) => {
     try {
-      const response = await fetch(`/api/deliveries/claim/${deliveryId}`, {
+      const response = await fetchFromApi(`/api/deliveries/claim/${deliveryId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ driver_id: user.id }),
@@ -47,7 +47,7 @@ export default function DriverDashboard({ user }: { user: any }) {
   const handleValidateDropoff = async () => {
     try {
       // Sending exact coordinates of Hope Rescue Shelter to pass the 100m geofence rule
-      const response = await fetch('/api/deliveries/validate-handover', {
+      const response = await fetchFromApi('/api/deliveries/validate-handover', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
